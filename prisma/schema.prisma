@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Change to your database provider if needed
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  clerkUserid String   @unique
+  email       String   @unique
+  name        String
+  imageUrl    String?
+  languageInsights LanguageInsight? @relation(fields:[language], references:[language])
+  nativeLang  String?
+  language   String? 
+  age         Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assessments Assessment[]
+}
+
+model Assessment {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields:[userId], references:[id])
+  score          Int
+  questions      Json[]   //array of {Question, answer, useranswer, correctanswer}
+  language       String    
+  improvementTip String   //ai gen
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model LanguageInsight{
+  id            String   @id @default(uuid())
+  language      String?   @unique
+  users         User[]
+
+  nativeSpeaker Int
+  totalSpeaker  Int
+  rank          Int
+  geoDist       String[]
+
+  lastUpdate    DateTime @default(now())
+  nextUpdate    DateTime
+
+  @@index([language])
+}

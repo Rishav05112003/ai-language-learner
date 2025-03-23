@@ -9,15 +9,44 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/react": "^1.1.23",
+    "@auth0/nextjs-auth0": "^4.0.2",
+    "@clerk/nextjs": "^6.12.2",
+    "@clerk/themes": "^2.2.20",
+    "@google/genai": "^0.4.0",
+    "@google/generative-ai": "^0.24.0",
+    "@hookform/resolvers": "^4.1.3",
+    "@prisma/client": "^6.4.1",
+    "@radix-ui/react-accordion": "^1.2.3",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-slot": "^1.1.2",
+    "ai": "^4.1.62",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "daisyui": "^5.0.0",
+    "date-fns": "^4.1.0",
+    "inngest": "^3.32.2",
+    "lucide-react": "^0.477.0",
+    "nanoid": "^5.1.5",
+    "next": "15.2.0",
+    "next-themes": "^0.4.6",
+    "prisma": "^6.4.1",
     "react": "^19.0.0",
+    "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
-    "next": "15.2.0"
+    "react-hook-form": "^7.54.2",
+    "react-markdown": "^10.1.0",
+    "sonner": "^2.0.1",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }
