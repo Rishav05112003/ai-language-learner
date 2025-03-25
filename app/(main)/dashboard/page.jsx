@@ -1,6 +1,8 @@
 import React from 'react'
 import { getUserOnboardingStatus } from '@/actions/user'
 import { redirect } from 'next/navigation';
+import UserInfo from './_components/UserInfo';
+import Insights from './_components/Insights';
 
 async function page() {
     const {isOnboarded} = await getUserOnboardingStatus();
@@ -10,8 +12,9 @@ async function page() {
         redirect("/onboarding");
     }
   return (
-    <div>
-      Dashboard
+    <div className='pt-20'>
+      <UserInfo/>
+      <Insights/>
     </div>
   )
 }

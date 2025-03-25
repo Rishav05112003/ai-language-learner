@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { initialMessage } from "@/lib/data";
+import { getUser } from "@/actions/user";
 
 let globalChatHistory = [
   {
@@ -10,6 +11,16 @@ let globalChatHistory = [
 
 export async function POST(request) {
   try {
+    // adding information of user to the model
+    const userInfo = await getUser();
+    const userContent = userInfo
+      ? `The name of the user is ${userInfo.name}. The user is ${userInfo.age} years old and speaks the native language ${userInfo.nativeLang}. ${userInfo.name} want to learn ${userInfo.language}. Initially speak in ${userInfo.nativeLang} with the User`
+      : "";
+    globalChatHistory.push({
+      role: "user",
+      parts: [{text : userContent}]
+    });
+
     const { message } = await request.json();
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
@@ -32,9 +43,6 @@ export async function POST(request) {
       role: "model",
       parts: [{ text: text }],
     });
-
-    
-    
 
     return new Response(JSON.stringify({ response: text }), {
       status: 200,

@@ -73,7 +73,7 @@ const Header = async () => {
                   <Link href="/mrlingo">Mr. Lingo</Link>
                 </li>
                 <li>
-                  <a>Tests</a>
+                  <Link href="/test">Tests</Link>
                 </li>
                 <li>
                   <Link href="/dashboard">Dashboard</Link>
@@ -124,7 +124,7 @@ const Header = async () => {
                 <Link href="/mrlingo">Mr. Lingo</Link>
               </li>
               <li className="btn bg-white mr-3 rounded-3xl border-0 text-black ">
-                <a>Tests</a>
+                <Link href="/test">Tests</Link>
               </li>
               <li className="btn bg-white mr-3 rounded-3xl border-0 text-black ">
                 <Link href="/dashboard">Dashboard</Link>

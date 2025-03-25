@@ -55,8 +55,8 @@ const OnboardingForm = ({ languages }) => {
   const watchNativeLang = watch("nativeLang")
 
   const onSubmit = async (values) => {
-    console.log(values);
-    console.log("values received");
+    //console.log(values);
+    //console.log("values received");
     try {
       await updateUserFn({
         ...values,
@@ -175,7 +175,7 @@ const OnboardingForm = ({ languages }) => {
 
 
 
-            <button type="submit" className="w-full mt-5 bg-black text-white h-7 rounded-[6px]">
+            <button type="submit" className="w-full mt-5 bg-black text-white h-7 rounded-[6px]" disabled={updateLoading}>
               {updateLoading ? (
                 <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin"/>

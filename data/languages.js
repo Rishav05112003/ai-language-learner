@@ -1,18 +1,22 @@
 export const languages = [
-  {
-    id:"1",
-    name:"English"
-  },
-  {
-    id:"2",
-    name :"hindi",
-  },
-  {
-    id:"3",
-    name:"spanish"
-  },
-  {
-    id:"4",
-    name:"japaneese"
-  }
-]
+  { id: "1", name: "English" },
+  { id: "2", name: "Hindi" },
+  { id: "3", name: "Spanish" },
+  { id: "4", name: "Japanese" },
+  { id: "5", name: "French" },
+  { id: "6", name: "German" },
+  { id: "7", name: "Mandarin" },
+  { id: "8", name: "Korean" },
+  { id: "9", name: "Arabic" },
+  { id: "10", name: "Russian" },
+  { id: "11", name: "Portuguese" },
+  { id: "12", name: "Bengali" },
+  { id: "13", name: "Italian" },
+  { id: "14", name: "Turkish" },
+  { id: "15", name: "Vietnamese" },
+  { id: "16", name: "Urdu" },
+  { id: "17", name: "Persian" },
+  { id: "18", name: "Malay" },
+  { id: "19", name: "Thai" },
+  { id: "20", name: "Swahili" },
+];
