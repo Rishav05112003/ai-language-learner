@@ -8,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
 import useFetch from "@/hooks/use-fetch";
 import { getUser } from "@/actions/user";
+import { countAssessments } from "@/actions/prep";
 
 function UserInfo() {
   const [date, setDate] = useState(new Date());
@@ -20,9 +20,16 @@ function UserInfo() {
     data: userInfo,
   } = useFetch(getUser);
 
+  const {
+    loading: countLoading,
+    fn: countAssessmentsFn,
+    data: countAssessmentData,
+  } = useFetch(countAssessments);
+
   useEffect(() => {
     const fetchData = async () => {
       await getUserFn();
+      await countAssessmentsFn();
     };
     fetchData();
   }, []);
@@ -88,7 +95,7 @@ function UserInfo() {
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold text-gray-500">
-                  {userInfo.assessmentsDone ?? 0}
+                  {countAssessmentData}
                 </p>
               </CardContent>
             </Card>
@@ -97,15 +104,7 @@ function UserInfo() {
       )}
 
 
-      {/* Calendar is independent of userInfo */}
-      {/* <div className="mt-6">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-md border"
-        />
-      </div> */}
+      
     </div>
   );
 }

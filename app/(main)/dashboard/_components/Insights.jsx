@@ -30,16 +30,6 @@ function Insights() {
     return <div className="container mx-auto">Loading insights...</div>;
   }
 
-  const data = [
-    {
-      name: "Native Speakers",
-      value: insightsInfo?.nativeSpeaker,
-    },
-    {
-      name: "Total Speakers",
-      value: insightsInfo?.totalSpeaker,
-    },
-  ];
 
   if (!insightsInfo) {
     return <div className="container mx-auto">No insights available.</div>;
@@ -57,7 +47,7 @@ function Insights() {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-green-700">
-              {insightsInfo?.totalSpeaker}
+              {insightsInfo?.totalSpeaker / 1000000} M
             </p>
           </CardContent>
         </Card>
@@ -69,7 +59,7 @@ function Insights() {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-green-700">
-              {insightsInfo?.nativeSpeaker}
+              {insightsInfo?.nativeSpeaker / 1000000} M
             </p>
           </CardContent>
         </Card>
