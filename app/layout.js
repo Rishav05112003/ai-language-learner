@@ -1,9 +1,7 @@
-import {  Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
-const inter = Inter({subsets: ["latin"]});
 
 
 export const metadata = {
@@ -16,7 +14,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider >
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${inter.className}`}
+          
         >
           {/**header*/}
           {/**auth to be done using clerk or AuthO */}
