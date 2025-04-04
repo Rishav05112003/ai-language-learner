@@ -72,7 +72,7 @@ export default function Chatbot() {
   }, [messages]);
 
   return (
-    <div className="w-full max-w-2xl h-[80vh] flex flex-col bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="w-full max-w-2xl h-[80vh] flex flex-col bg-white rounded-lg shadow-lg overflow-auto">
       <div className="bg-black p-4 text-white text-lg font-semibold">
         Chat with Mr. Lingo
       </div>

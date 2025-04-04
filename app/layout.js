@@ -2,6 +2,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SignedOut } from "@clerk/nextjs";
 
 
 export const metadata = {
@@ -22,11 +23,13 @@ export default function RootLayout({ children }) {
           <main className="min-h-screen">{children}</main>
           <Toaster richColors/>
           {/**footer */}
+          <SignedOut>
           <footer className="flex bg-muted py-12">
             <div className=" container  mx-auto text-center text-gray-600">
               <p>Made by Rishav</p>
             </div>
           </footer>
+          </SignedOut>
         </body>
       </html>
     </ClerkProvider>

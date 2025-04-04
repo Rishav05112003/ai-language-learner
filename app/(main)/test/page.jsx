@@ -1,10 +1,6 @@
 import React from "react";
 import { getUserOnboardingStatus } from "@/actions/user";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import Questions from "./_components/Questions";
 import StatCards from "./_components/StatCards";
 import { getAssessments } from "@/actions/prep";
 import PerformanceChart from "./_components/performanceChart";

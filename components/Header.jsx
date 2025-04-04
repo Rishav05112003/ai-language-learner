@@ -14,11 +14,36 @@ import { checkUser } from "@/lib/checkUser";
 const Header = async () => {
   await checkUser();
   return (
-    <header className="w-full fixed ">
-      {/**navbar 2 design testing */}
+    <header className="w-full fixed z-100 bg-white">
       <nav className="navbar bg-white shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
+            
+            {/* <SignedOut>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content border-2 bg-white rounded-box z-1 mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a href="#whyus">Why us?</a>
+                </li>
+                <li>
+                  <a href="#products">Our Products</a>
+                  <ul className="p-2">
+                    <li>
+                      <a> Mr. Lingo </a>
+                    </li>
+                    <li>
+                      <a>Ai Quiz</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Prices</a>
+                </li>
+              </ul>
+            </SignedOut> */}
+            <SignedIn>
             <div
               tabIndex={0}
               role="button"
@@ -40,31 +65,9 @@ const Header = async () => {
                 />{" "}
               </svg>
             </div>
-            <SignedOut>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content border-2 bg-white rounded-box z-1 mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <a>Why us?</a>
-                </li>
-                <li>
-                  <a>Our Products</a>
-                  <ul className="p-2">
-                    <li>
-                      <a> Product 1</a>
-                    </li>
-                    <li>
-                      <a>Product 2</a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a>Prices</a>
-                </li>
-              </ul>
-            </SignedOut>
+            </SignedIn>
             <SignedIn>
+
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content border-2 bg-white rounded-box z-1 mt-3 w-52 p-2 shadow"
@@ -93,31 +96,7 @@ const Header = async () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <SignedOut>
-            <ul className="menu bg-white  menu-horizontal px-1">
-              <li className="btn bg-white mr-3 rounded-3xl border-0 text-black ">
-                <a>Why us?</a>
-              </li>
-              <li>
-                <details>
-                  <summary className="btn  bg-white rounded-2xl border-0 text-black">
-                    Our Products
-                  </summary>
-                  <ul className="p-2 bg-white">
-                    <li>
-                      <a>Product 1</a>
-                    </li>
-                    <li>
-                      <a>Product 2</a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li className="btn ml-3 bg-white rounded-2xl border-0 text-black">
-                <a>Prices</a>
-              </li>
-            </ul>
-          </SignedOut>
+          
           <SignedIn>
             <ul className="menu bg-white  menu-horizontal px-1">
               <li className="btn mr-3 bg-white rounded-2xl border-0 text-black">
