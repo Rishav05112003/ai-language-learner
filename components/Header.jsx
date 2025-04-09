@@ -86,13 +86,7 @@ const Header = async () => {
             </SignedIn>
           </div>
           <Link href="/">
-            <Image
-              src="/lingoAi.png"
-              alt="logo"
-              width={200}
-              height={200}
-              className="h-12 py-1 w-auto ml-5 object-contain"
-            ></Image>
+            <h1 className="text-black pl-3  text-4xl font-bold ">Lingo<span className="text-green-600">AI</span></h1>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
