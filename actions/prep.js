@@ -138,10 +138,12 @@ export async function getAssessments() {
   const user = await db.user.findUnique({
     where: { clerkUserid: userId },
     select: {
+      id: true,
       language: true,
     },
   });
-
+  console.log(user.id);
+  
   if (!user) throw new Error("user not found");
   try {
     const assessments = await db.assessment.findMany({
@@ -152,7 +154,8 @@ export async function getAssessments() {
         createdAt: "asc",
       },
     });
-
+    console.log(assessments);
+    
     return assessments;
   } catch (error) {
     throw new Error("Failed to get assessments");
