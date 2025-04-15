@@ -55,7 +55,7 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="">
+          {/* <Link href="">
             <Button
               size="lg"
               variant="outline"
@@ -63,7 +63,7 @@ const HeroSection = () => {
             >
               Watch Demo
             </Button>
-          </Link>
+          </Link> */}
         </div>
         {/**<div className="hero-image-wrapper mt-5 md:mt-0">
           <div ref={imageRef} className="hero-image">
