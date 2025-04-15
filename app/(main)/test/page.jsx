@@ -19,7 +19,7 @@ async function page() {
   const assessments = await getAssessments();
   return <div className="pt-20 text-black container mx-auto">
     <div className="flex items-center justify-between mb-5">
-        <h1 className="text-6xl font-bold gradient-title">
+        <h1 className="sm:text-6xl font-bold gradient-title text-4xl">
           Assessment
         </h1>
       </div>

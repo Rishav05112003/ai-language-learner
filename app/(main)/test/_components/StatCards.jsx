@@ -25,8 +25,8 @@ export default function StatCards({ assessments }) {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
-      <Card>
+    <div className="grid gap-4 place-items-center md:grid-cols-3">
+      <Card className="w-64 sm:w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Average Score</CardTitle>
           <Trophy className="h-4 w-4 text-muted-foreground" />
@@ -39,7 +39,7 @@ export default function StatCards({ assessments }) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="w-64 sm:w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Questions Practiced
@@ -52,7 +52,7 @@ export default function StatCards({ assessments }) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="w-64 sm:w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Latest Score</CardTitle>
           <Target className="h-4 w-4 text-muted-foreground" />

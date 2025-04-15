@@ -142,7 +142,7 @@ export async function getAssessments() {
       language: true,
     },
   });
-  console.log(user.id);
+  //console.log(user.id);
   
   if (!user) throw new Error("user not found");
   try {
@@ -154,7 +154,7 @@ export async function getAssessments() {
         createdAt: "asc",
       },
     });
-    console.log(assessments);
+    //console.log(assessments);
     
     return assessments;
   } catch (error) {
