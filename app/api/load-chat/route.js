@@ -1,17 +1,34 @@
 import { getUser } from "@/actions/user";
 import { db } from "@/lib/prisma";
 
-export async function GET() {
+const PAGE_SIZE = 20;
+
+export async function GET(request) {
   try {
     const user = await getUser();
     if (!user) return new Response("Unauthorized", { status: 401 });
 
-    const conversation = await db.conversation.findFirst({
-      where: { userId: user.id },
-      orderBy: { updatedAt: "desc" },
+    const { searchParams } = new URL(request.url);
+    const sessionId = searchParams.get("sessionId");
+    const cursor = searchParams.get("cursor"); // for pagination
+
+    if (!sessionId) {
+      return new Response("Missing sessionId", { status: 400 });
+    }
+
+    const messages = await db.conversation.findMany({
+      where: { sessionId: sessionId },
+      take: PAGE_SIZE,
+      ...(cursor
+        ? {
+            skip: 1,
+            cursor: { id: cursor },
+          }
+        : {}),
+      orderBy: { createdAt: "desc" },
     });
 
-    return new Response(JSON.stringify({ chat: conversation }), {
+    return new Response(JSON.stringify({ messages }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

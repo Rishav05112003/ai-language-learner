@@ -1,3 +1,4 @@
+// --- Chatbot.jsx ---
 "use client";
 import { useRef, useState, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
@@ -25,8 +26,6 @@ export default function Chatbot() {
     setError(null);
 
     try {
-      console.log("sessionID:",sessionId);
-      
       const response = await fetch("/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,7 +59,6 @@ export default function Chatbot() {
     }
   };
 
-  // 👇 Setup sessionId and load messages
   useEffect(() => {
     const savedSessionId = localStorage.getItem("sessionId");
     const currentSessionId = savedSessionId || uuidv4();
@@ -71,8 +69,12 @@ export default function Chatbot() {
       try {
         const res = await fetch(`/api/load-chat?sessionId=${currentSessionId}`);
         const data = await res.json();
-        if (data.chat && data.chat.messages) {
-          setMessages(data.chat.messages);
+        if (data.messages) {
+          const reversed = [...data.messages].reverse().map((msg) => ({
+            role: msg.role === "bot" ? "assistant" : msg.role,
+            content: msg.message,
+          }));
+          setMessages(reversed);
         }
       } catch (err) {
         console.error("Failed to load chat:", err);
