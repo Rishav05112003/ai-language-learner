@@ -1,23 +1,18 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { Send } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
   const chatEndRef = useRef(null);
-  const [chatId, setChatId] = useState(null); // Add chatId state
 
-
-  
-
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
+  const handleInputChange = (e) => setInput(e.target.value);
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
@@ -30,15 +25,15 @@ export default function Chatbot() {
     setError(null);
 
     try {
+      console.log("sessionID:",sessionId);
+      
       const response = await fetch("/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input}), 
+        body: JSON.stringify({ prompt: input, sessionId }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
       const aiMessage = { role: "assistant", content: data.response };
@@ -57,15 +52,35 @@ export default function Chatbot() {
   };
 
   const handleRetry = () => {
-    if (messages.length > 0) {
-      const lastUserMessage = messages
-        .filter((msg) => msg.role === "user")
-        .pop();
+    const lastUserMessage = messages.filter((msg) => msg.role === "user").pop();
+    if (lastUserMessage) {
       setInput(lastUserMessage.content);
-      setMessages(messages.slice(0, messages.length - 1));
+      setMessages(messages.slice(0, -1));
       handleSubmit();
     }
   };
+
+  // 👇 Setup sessionId and load messages
+  useEffect(() => {
+    const savedSessionId = localStorage.getItem("sessionId");
+    const currentSessionId = savedSessionId || uuidv4();
+    setSessionId(currentSessionId);
+    localStorage.setItem("sessionId", currentSessionId);
+
+    const loadChat = async () => {
+      try {
+        const res = await fetch(`/api/load-chat?sessionId=${currentSessionId}`);
+        const data = await res.json();
+        if (data.chat && data.chat.messages) {
+          setMessages(data.chat.messages);
+        }
+      } catch (err) {
+        console.error("Failed to load chat:", err);
+      }
+    };
+
+    loadChat();
+  }, []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -77,16 +92,10 @@ export default function Chatbot() {
         Chat with Mr. Lingo
       </div>
 
-      {/* Chat Area */}
       <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
         {messages.length === 0 && <div>No Messages Yet</div>}
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
+          <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             <div
               className={`px-4 py-2 rounded-lg max-w-xs ${
                 msg.role === "user"
@@ -101,7 +110,7 @@ export default function Chatbot() {
         {isLoading && (
           <div className="w-full items-center flex justify-center gap-3">
             <Loader2 className="animate-spin h-2 w-5 text-primary" />
-            <button className="underline" type="button" onClick={handleStop}>
+            <button className="underline" onClick={handleStop}>
               Stop
             </button>
           </div>
@@ -109,7 +118,7 @@ export default function Chatbot() {
         {error && (
           <div className="w-full items-center flex justify-center gap-3">
             <div>An Error Occurred: {error}</div>
-            <button className="underline" type="button" onClick={handleRetry}>
+            <button className="underline" onClick={handleRetry}>
               Retry
             </button>
           </div>
@@ -117,11 +126,7 @@ export default function Chatbot() {
         <div ref={chatEndRef} />
       </div>
 
-      {/* Input */}
-      <form
-        onSubmit={handleSubmit}
-        className="p-4 border-t flex gap-2 bg-white"
-      >
+      <form onSubmit={handleSubmit} className="p-4 border-t flex gap-2 bg-white">
         <input
           type="text"
           value={input}

@@ -8,46 +8,65 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  clerkUserid String   @unique
-  email       String   @unique
-  name        String
-  imageUrl    String?
-  languageInsights LanguageInsight? @relation(fields:[language], references:[language])
-  nativeLang  String?
-  language   String? 
-  age         Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  assessments Assessment[]
+  id               String           @id @default(uuid())
+  clerkUserid      String           @unique
+  email            String           @unique
+  name             String
+  imageUrl         String?
+  languageInsights LanguageInsight? @relation(fields: [language], references: [language])
+  nativeLang       String?
+  language         String?
+  age              Int?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  assessments      Assessment[]
+  conversations    Conversation[] // ✅ back-reference added
 }
 
 model Assessment {
   id             String   @id @default(uuid())
   userId         String
-  user           User     @relation(fields:[userId], references:[id])
+  user           User     @relation(fields: [userId], references: [id])
   score          Int
-  questions      Json[]   //array of {Question, answer, useranswer, correctanswer}
-  language       String    
-  improvementTip String   //ai gen
+  questions      Json[] //array of {Question, answer, useranswer, correctanswer}
+  language       String
+  improvementTip String //ai gen
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   @@index([userId])
 }
 
-model LanguageInsight{
-  id            String   @id @default(uuid())
-  language      String?   @unique
-  users         User[]
+model LanguageInsight {
+  id       String  @id @default(uuid())
+  language String? @unique
+  users    User[]
 
   nativeSpeaker Int
   totalSpeaker  Int
   rank          Int
   geoDist       String[]
 
-  lastUpdate    DateTime @default(now())
-  nextUpdate    DateTime
+  lastUpdate DateTime @default(now())
+  nextUpdate DateTime
 
   @@index([language])
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  message   String
+  role      Role // 'user' or 'bot'
+  sessionId String // UUID per chat session
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt // ✅ this is missing
+  @@index([userId])
+  @@index([sessionId])
+}
+
+enum Role {
+  user
+  bot
 }

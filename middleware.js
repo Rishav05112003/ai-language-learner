@@ -1,25 +1,29 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+// Protect only dashboard routes
 const isProtectedRoute = createRouteMatcher([
-    "/dashboard(.*)",
-])
+  "/dashboard(.*)",
+]);
 
 export default clerkMiddleware(async (auth, req) => {
-    const {userId} = await auth()
-    if(!userId && isProtectedRoute(req)){
-        const  {redirectToSignIn} = await auth()
-        return redirectToSignIn();
-    }
+  const { userId } = await auth();
 
-    return NextResponse.next();
+  if (!userId && isProtectedRoute(req)) {
+    const { redirectToSignIn } = await auth();
+    return redirectToSignIn();
+  }
+
+  return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
+    // Match everything except static/public files (non-capturing groups used)
+    "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:css|js|png|jpg|jpeg|svg|woff|woff2|ttf)).*)",
+    "/",               // explicitly include root
+    "/dashboard(.*)",  // your protected route
+    "/(api|trpc)(.*)", // API routes
+    "/mrlingo(.*)",    // other dynamic routes needing auth
   ],
 };

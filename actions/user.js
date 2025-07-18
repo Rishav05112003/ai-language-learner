@@ -110,6 +110,8 @@ export async function getUserOnboardingStatus() {
 
 export async function getUser() {
   const { userId } = await auth();
+  console.log("userId:", userId);
+  
   if (!userId) throw new Error("Unthorized");
 
   try {
